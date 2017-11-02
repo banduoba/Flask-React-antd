@@ -6,6 +6,8 @@ import Analysis from '../routes/Dashboard/Analysis';
 import Monitor from '../routes/Dashboard/Monitor';
 import Workplace from '../routes/Dashboard/Workplace';
 
+import NewsBoard from '../routes/Spider/NewsBoard';
+
 import TableList from '../routes/List/TableList';
 import CoverCardList from '../routes/List/CoverCardList';
 import CardList from '../routes/List/CardList';
@@ -54,6 +56,15 @@ const data = [{
       name: '工作台',
       path: 'workplace',
       component: Workplace,
+    }],
+  }, {
+    name: '爬虫',
+    icon: 'scan',
+    path: 'spider',
+    children: [{
+      name: '布告牌',
+      path: 'news-board',
+      component: NewsBoard,
     }],
   }, {
     name: '表单页',
@@ -173,15 +184,6 @@ const data = [{
       component: RegisterResult,
     }],
   }],
-}, {
-  component: BlankLayout,
-  layout: 'BlankLayout',
-  children: {
-    name: '使用文档',
-    path: 'http://pro.ant.design/docs/getting-started',
-    target: '_blank',
-    icon: 'book',
-  },
 }];
 
 export function getNavData() {

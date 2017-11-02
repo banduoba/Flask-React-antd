@@ -24,6 +24,13 @@
     "g-cloud": "Cloud",
     "g2-plugin-slider": "G2.Plugin.slider"
   },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:5000",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    }
+  },
   "ignoreMomentLocale": true,
   "theme": "./src/theme.js"
 }

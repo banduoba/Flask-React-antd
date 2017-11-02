@@ -18,7 +18,7 @@ const links = [{
   href: '',
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2017 蚂蚁金服体验技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" /> 2017 Eric Web实验基地出品</div>;
 
 class UserLayout extends React.PureComponent {
   static childContextTypes = {
@@ -31,7 +31,7 @@ class UserLayout extends React.PureComponent {
   getPageTitle() {
     const { location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = "Eric's Lab";
     getRouteData('UserLayout').forEach((item) => {
       if (item.path === pathname) {
         title = `${item.name} - Ant Design Pro`;
@@ -47,10 +47,10 @@ class UserLayout extends React.PureComponent {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="" className={styles.logo} src="https://gw.alipayobjects.com/zos/rmsportal/NGCCBOENpgTXpBWUIPnI.svg" />
-                <span className={styles.title}>Ant Design</span>
+                <span className={styles.title}>Eric's Lab</span>
               </Link>
             </div>
-            <p className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</p>
+            <p className={styles.desc}>Eric的Web实验基地</p>
           </div>
           {
             getRouteData('UserLayout').map(item =>

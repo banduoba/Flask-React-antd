@@ -157,7 +157,7 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = "Eric's Lab";
     getRouteData('UserLayout').forEach((item) => {
       if (item.path === pathname) {
         title = `${item.name} - Ant Design Pro`;
@@ -256,7 +256,7 @@ class BasicLayout extends React.PureComponent {
           <div className={styles.logo}>
             <Link to="/">
               <img src="https://gw.alipayobjects.com/zos/rmsportal/iwWyPinUoseUxIAeElSx.svg" alt="logo" />
-              <h1>Ant Design Pro</h1>
+              <h1>Eric's Lab</h1>
             </Link>
           </div>
           <Menu
@@ -347,12 +347,12 @@ class BasicLayout extends React.PureComponent {
             </Switch>
             <GlobalFooter
               links={[{
-                title: 'Pro 首页',
+                title: '首页',
                 href: 'http://pro.ant.design',
                 blankTarget: true,
               }, {
                 title: 'GitHub',
-                href: 'https://github.com/ant-design/ant-design-pro',
+                href: 'https://github.com/egliu/Flask-React-antd',
                 blankTarget: true,
               }, {
                 title: 'Ant Design',
@@ -361,7 +361,7 @@ class BasicLayout extends React.PureComponent {
               }]}
               copyright={
                 <div>
-                  Copyright <Icon type="copyright" /> 2017 蚂蚁金服体验技术部出品
+                  Copyright <Icon type="copyright" /> 2017 Eric Web实验基地出品
                 </div>
               }
             />
