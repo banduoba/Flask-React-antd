@@ -1,25 +1,26 @@
-import { message } from 'antd'
-import dva from 'dva'
-import createLoading from 'dva-loading'
-import createHistory from 'history/createBrowserHistory'
-import 'babel-polyfill'
+import dva from 'dva';
+import 'moment/locale/zh-cn';
+import models from './models';
+import './polyfill';
+import './g2';
+// import { browserHistory } from 'dva/router';
+import './index.less';
 
 // 1. Initialize
 const app = dva({
-  ...createLoading({
-    effects: true,
-  }),
-  history: createHistory(),
-  onError (error) {
-    message.error(error.message)
-  },
-})
+  // history: browserHistory,
+});
 
-// 2. Model
-app.model(require('./models/app'))
+// 2. Plugins
+// app.use({});
 
-// 3. Router
-app.router(require('./router'))
+// 3. Model move to router
+models.forEach((m) => {
+  app.model(m);
+});
 
-// 4. Start
-app.start('#root')
+// 4. Router
+app.router(require('./router'));
+
+// 5. Start
+app.start('#root');

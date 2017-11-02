@@ -1,29 +1,73 @@
-import { routerRedux } from 'dva/router'
-import { login } from 'services/login'
+import { fakeAccountLogin, fakeMobileLogin } from '../services/api';
 
 export default {
   namespace: 'login',
 
-  state: {},
+  state: {
+    status: undefined,
+  },
 
   effects: {
-    * login ({
-      payload,
-    }, { put, call, select }) {
-      const data = yield call(login, payload)
-      const { locationQuery } = yield select(_ => _.app)
-      if (data.success) {
-        const { from } = locationQuery
-        yield put({ type: 'app/query' })
-        if (from && from !== '/login') {
-          yield put(routerRedux.push(from))
-        } else {
-          yield put(routerRedux.push('/dashboard'))
-        }
-      } else {
-        throw data
+    *accountSubmit({ payload }, { call, put }) {
+      yield put({
+        type: 'changeSubmitting',
+        payload: true,
+      });
+      const response = yield call(fakeAccountLogin, payload);
+      yield put({
+        type: 'loginHandle',
+        payload: response,
+      });
+      yield put({
+        type: 'changeSubmitting',
+        payload: false,
+      });
+    },
+    *mobileSubmit(_, { call, put }) {
+      yield put({
+        type: 'changeSubmitting',
+        payload: true,
+      });
+      const response = yield call(fakeMobileLogin);
+      yield put({
+        type: 'loginHandle',
+        payload: response,
+      });
+      yield put({
+        type: 'changeSubmitting',
+        payload: false,
+      });
+    },
+    *logout({ payload, callback }, { put }) {
+      yield put({
+        type: 'logoutHandle',
+        payload,
+      });
+      if (callback) {
+        callback();
       }
     },
   },
 
-}
+  reducers: {
+    loginHandle(state, { payload }) {
+      return {
+        ...state,
+        status: payload.status,
+        type: payload.type,
+      };
+    },
+    changeSubmitting(state, { payload }) {
+      return {
+        ...state,
+        submitting: payload,
+      };
+    },
+    logoutHandle(state, { payload }) {
+      return {
+        ...state,
+        status: payload.status,
+      };
+    },
+  },
+};
