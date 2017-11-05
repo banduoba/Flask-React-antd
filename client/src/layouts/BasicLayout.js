@@ -343,7 +343,7 @@ class BasicLayout extends React.PureComponent {
                   )
                 )
               }
-              <Redirect to="/dashboard/analysis" />
+              <Redirect to="/spider/news-board" />
             </Switch>
             <GlobalFooter
               links={[{
