@@ -75,7 +75,7 @@ export default {
         segmentNews: action.payload,
       };
     },
-    fetchJobboleNews(state, action) {
+    saveJobboleNews(state, action) {
       return {
         ...state,
         jobboleNews: action.payload,
