@@ -20,26 +20,13 @@ export default class NewsBoard extends PureComponent {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      newsFetched: this.props.githubNews
+      newsType: 'Github'
     }
   }
 
   componentDidMount() {
-    this.state.newsFetched = this.props.githubNews;
     this.props.dispatch({
       type: 'spider/fetchGithubNews',
-    });
-    this.props.dispatch({
-      type: 'spider/fetchHackerNews',
-    });
-    this.props.dispatch({
-      type: 'spider/fetchSegmentNews',
-    });
-    this.props.dispatch({
-      type: 'spider/fetchToutiaoNews',
-    });
-    this.props.dispatch({
-      type: 'spider/fetchJobboleNews',
     });
   }
 
@@ -49,31 +36,31 @@ export default class NewsBoard extends PureComponent {
   handleChange(value) {
     switch (value) {
       case 'Github':
-        this.state.newsFetched = this.props.githubNews;
+        this.setState({newsType: 'Github'})
         this.props.dispatch({
           type: 'spider/fetchGithubNews',
         });
         break;
       case 'Hacker News':
-        this.state.newsFetched = this.props.hackerNews;
+        this.setState({newsType: 'Hacker News'})
         this.props.dispatch({
           type: 'spider/fetchHackerNews',
         });
         break;
       case 'Segment Fault':
-        this.state.newsFetched = this.props.segmentNews;
+        this.setState({newsType: 'Segment Fault'})
         this.props.dispatch({
           type: 'spider/fetchSegmentNews',
         });
         break;
       case '开发者头条':
-        this.state.newsFetched = this.props.toutiaoNews;
+        this.setState({newsType: '开发者头条'})
         this.props.dispatch({
           type: 'spider/fetchToutiaoNews',
         });
         break;
       case '伯乐头条':
-        this.state.newsFetched = this.props.jobboleNews;
+        this.setState({newsType: '伯乐头条'})
         this.props.dispatch({
           type: 'spider/fetchJobboleNews',
         });
@@ -84,6 +71,9 @@ export default class NewsBoard extends PureComponent {
   }
 
   render() {
+
+    const { githubNews, toutiaoNews, hackerNews, segmentNews, jobboleNews } = this.props;
+
     return (
       <div>
         <Card title="信息聚合阅读">
@@ -94,10 +84,10 @@ export default class NewsBoard extends PureComponent {
             <Select.Option value="开发者头条">开发者头条</Select.Option>
             <Select.Option value="伯乐头条">伯乐头条</Select.Option>
           </Select>
-          {this.state.newsFetched.data ? (
+          {this.state.newsType === 'Github' && githubNews.data ? (
             <ul>
             {
-              this.state.newsFetched.data.map((post, i) => {
+              githubNews.data.map((post, i) => {
                 return (
                   <div key={i}>
                       <a href={post.url} target="_blank">{post.title}</a>
@@ -115,7 +105,100 @@ export default class NewsBoard extends PureComponent {
                 );
               }, this)
             }
-            </ul>) : <Spin size="small" style={{ marginLeft: 8 }} />}
+            </ul>) : null}
+
+          {this.state.newsType === 'Hacker News' && hackerNews.data ? (
+            <ul>
+            {
+              hackerNews.data.map((post, i) => {
+                return (
+                  <div key={i}>
+                      <a href={post.url} target="_blank">{post.title}</a>
+                    {
+                      post.desc ?
+                        <div>
+                          <div>
+                            <p>{post.desc}</p>
+                          </div>
+                        </div>
+                        : null
+                    }
+                    <Divider style={{ marginBottom: 32 }} />
+                  </div>
+                );
+              }, this)
+            }
+            </ul>) : null}
+        
+         {this.state.newsType === 'Segment Fault' && segmentNews.data ? (
+            <ul>
+            {
+              segmentNews.data.map((post, i) => {
+                return (
+                  <div key={i}>
+                      <a href={post.url} target="_blank">{post.title}</a>
+                    {
+                      post.desc ?
+                        <div>
+                          <div>
+                            <p>{post.desc}</p>
+                          </div>
+                        </div>
+                        : null
+                    }
+                    <Divider style={{ marginBottom: 32 }} />
+                  </div>
+                );
+              }, this)
+            }
+            </ul>) : null}
+          
+          {this.state.newsType === '开发者头条' && toutiaoNews.data ? (
+            <ul>
+            {
+              toutiaoNews.data.map((post, i) => {
+                return (
+                  <div key={i}>
+                      <a href={post.url} target="_blank">{post.title}</a>
+                    {
+                      post.desc ?
+                        <div>
+                          <div>
+                            <p>{post.desc}</p>
+                          </div>
+                        </div>
+                        : null
+                    }
+                    <Divider style={{ marginBottom: 32 }} />
+                  </div>
+                );
+              }, this)
+            }
+            </ul>) : null}
+          
+          {this.state.newsType === '伯乐头条' && jobboleNews.data ? (
+            <ul>
+            {
+              jobboleNews.data.map((post, i) => {
+                return (
+                  <div key={i}>
+                      <a href={post.url} target="_blank">{post.title}</a>
+                    {
+                      post.desc ?
+                        <div>
+                          <div>
+                            <p>{post.desc}</p>
+                          </div>
+                        </div>
+                        : null
+                    }
+                    <Divider style={{ marginBottom: 32 }} />
+                  </div>
+                );
+              }, this)
+            }
+            </ul>) : null}
+
         </Card>
       </div>
     );
