@@ -2,173 +2,99 @@ import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
-import { Row, Col, Card, List, Avatar } from 'antd';
-
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import EditableLinkGroup from '../../components/EditableLinkGroup';
-import { Radar } from '../../components/Charts';
+import { Card, Spin, Select, Divider } from 'antd';
 
 import styles from './NewsBoard.less';
 
-const links = [
-  {
-    title: '操作一',
-    href: '',
-  },
-  {
-    title: '操作二',
-    href: '',
-  },
-  {
-    title: '操作三',
-    href: '',
-  },
-  {
-    title: '操作四',
-    href: '',
-  },
-  {
-    title: '操作五',
-    href: '',
-  },
-  {
-    title: '操作六',
-    href: '',
-  },
-];
-
-const members = [
-  {
-    id: 'members-1',
-    title: '科学搬砖组',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
-    link: '',
-  },
-  {
-    id: 'members-2',
-    title: '程序员日常',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png',
-    link: '',
-  },
-  {
-    id: 'members-3',
-    title: '设计天团',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png',
-    link: '',
-  },
-  {
-    id: 'members-4',
-    title: '中二少女团',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png',
-    link: '',
-  },
-  {
-    id: 'members-5',
-    title: '骗你学计算机',
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png',
-    link: '',
-  },
-];
-
 @connect(state => ({
-  project: state.project,
-  activities: state.activities,
-  chart: state.chart,
+  githubNews: state.spider.githubNews,
+  toutiaoNews: state.spider.toutiaoNews,
+  hackerNews: state.spider.hackerNews,
+  segmentNews: state.spider.segmentNews,
+  jobboleNews: state.spider.jobboleNews,
 }))
 export default class NewsBoard extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'project/fetchNotice',
-    });
-    dispatch({
-      type: 'activities/fetchList',
-    });
-    dispatch({
-      type: 'chart/fetch',
+      type: 'spider/fetchGithubNews',
     });
   }
 
   componentWillUnmount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'chart/clear',
-    });
   }
 
-  renderActivities() {
-    const {
-      activities: { list },
-    } = this.props;
-    return list.map((item) => {
-      const events = item.template.split(/@\{([^{}]*)\}/gi).map((key) => {
-        if (item[key]) {
-          return <a href={item[key].link} key={item[key].name}>{item[key].name}</a>;
-        }
-        return key;
-      });
-      return (
-        <List.Item key={item.id}>
-          <List.Item.Meta
-            avatar={<Avatar src={item.user.avatar} />}
-            title={
-              <span>
-                <a className={styles.username}>{item.user.name}</a>
-                &nbsp;
-                <span className={styles.event}>{events}</span>
-              </span>
-            }
-            description={
-              <span className={styles.datetime} title={item.updatedAt}>
-                {moment(item.updatedAt).fromNow()}
-              </span>
-            }
-          />
-        </List.Item>
-      );
+  handleChange(value) {
+    // this.props.dispatch(selectItem(nextItem, id));
+    alert('valus is '+ value);
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'spider/fetchGithubNews',
     });
   }
 
   render() {
     const {
-      project: { loading: projectLoading, notice },
-      activities: { loading: activitiesLoading },
-      chart: { radarData },
+      githubNews, toutiaoNews, hackerNews, segmentNews, jobboleNews
     } = this.props;
-
-    const pageHeaderContent = (
-      <div className={styles.pageHeaderContent}>
-        <div className={styles.avatar}>
-          <Avatar size="large" src="https://gw.alipayobjects.com/zos/rmsportal/lctvVCLfRpYCkYxAsiVQ.png" />
-        </div>
-        <div className={styles.content}>
-          <p className={styles.contentTitle}>早安，曲丽丽，祝你开心每一天！</p>
-          <p>交互专家 | 蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</p>
-        </div>
-      </div>
-    );
-
-    const pageHeaderExtra = (
-      <div className={styles.pageHeaderExtra}>
-        <div>
-          <p>项目数</p>
-          <p>56</p>
-        </div>
-        <div>
-          <p>团队内排名</p>
-          <p>8<span> / 24</span></p>
-        </div>
-        <div>
-          <p>项目访问</p>
-          <p>2,223</p>
-        </div>
-      </div>
-    );
+    const selectors = [
+      {
+        item: 'Github',
+        boardId: 0,
+      },
+      {
+        item: 'Hacker News',
+        boardId: 1,
+      },
+      {
+        item: '开发者头条',
+        boardId: 2,
+      },
+      {
+        item: 'Segment Fault',
+        boardId: 3,
+      },
+    ];
+    const boards = [];
+    for (const value of selectors) {
+      boards.push(value.boardId);
+    }
+    const options = ['Github', 'Hacker News', 'Segment Fault', '开发者头条', '伯乐头条'];
 
     return (
-      <PageHeaderLayout
-      >
-      </PageHeaderLayout>
+      <div>
+        <Card>
+          <Select defaultValue="Github" style={{ width: 160 }} onChange={this.handleChange}>
+            <Select.Option value="Github">Github</Select.Option>
+            <Select.Option value="Hacker News">Hacker News</Select.Option>
+            <Select.Option value="Segment Fault">Segment Fault</Select.Option>
+            <Select.Option value="开发者头条">开发者头条</Select.Option>
+            <Select.Option value="伯乐头条">伯乐头条</Select.Option>
+          </Select>
+          {githubNews.data ? (
+            <ul>
+            {
+              githubNews.data.map((post, i) => {
+                return (
+                  <div key={i}>
+                      <a href={post.url} target="_blank">{post.title}</a>
+                    {
+                      post.desc ?
+                        <div>
+                          <div>
+                            <p>{post.desc}</p>
+                          </div>
+                        </div>
+                        : null
+                    }
+                    <Divider style={{ marginBottom: 32 }} />
+                  </div>
+                );
+              }, this)
+            }
+            </ul>) : <Spin size="small" style={{ marginLeft: 8 }} />}
+        </Card>
+      </div>
     );
   }
 }
