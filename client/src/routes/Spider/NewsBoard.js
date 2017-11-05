@@ -14,10 +14,32 @@ import styles from './NewsBoard.less';
   jobboleNews: state.spider.jobboleNews,
 }))
 export default class NewsBoard extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      newsFetched: this.props.githubNews
+    }
+  }
+
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
+    this.state.newsFetched = this.props.githubNews;
+    this.props.dispatch({
       type: 'spider/fetchGithubNews',
+    });
+    this.props.dispatch({
+      type: 'spider/fetchHackerNews',
+    });
+    this.props.dispatch({
+      type: 'spider/fetchSegmentNews',
+    });
+    this.props.dispatch({
+      type: 'spider/fetchToutiaoNews',
+    });
+    this.props.dispatch({
+      type: 'spider/fetchJobboleNews',
     });
   }
 
@@ -25,45 +47,46 @@ export default class NewsBoard extends PureComponent {
   }
 
   handleChange(value) {
-    // this.props.dispatch(selectItem(nextItem, id));
-    alert('valus is '+ value);
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'spider/fetchGithubNews',
-    });
+    switch (value) {
+      case 'Github':
+        this.state.newsFetched = this.props.githubNews;
+        this.props.dispatch({
+          type: 'spider/fetchGithubNews',
+        });
+        break;
+      case 'Hacker News':
+        this.state.newsFetched = this.props.hackerNews;
+        this.props.dispatch({
+          type: 'spider/fetchHackerNews',
+        });
+        break;
+      case 'Segment Fault':
+        this.state.newsFetched = this.props.segmentNews;
+        this.props.dispatch({
+          type: 'spider/fetchSegmentNews',
+        });
+        break;
+      case '开发者头条':
+        this.state.newsFetched = this.props.toutiaoNews;
+        this.props.dispatch({
+          type: 'spider/fetchToutiaoNews',
+        });
+        break;
+      case '伯乐头条':
+        this.state.newsFetched = this.props.jobboleNews;
+        this.props.dispatch({
+          type: 'spider/fetchJobboleNews',
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   render() {
-    const {
-      githubNews, toutiaoNews, hackerNews, segmentNews, jobboleNews
-    } = this.props;
-    const selectors = [
-      {
-        item: 'Github',
-        boardId: 0,
-      },
-      {
-        item: 'Hacker News',
-        boardId: 1,
-      },
-      {
-        item: '开发者头条',
-        boardId: 2,
-      },
-      {
-        item: 'Segment Fault',
-        boardId: 3,
-      },
-    ];
-    const boards = [];
-    for (const value of selectors) {
-      boards.push(value.boardId);
-    }
-    const options = ['Github', 'Hacker News', 'Segment Fault', '开发者头条', '伯乐头条'];
-
     return (
       <div>
-        <Card>
+        <Card title="信息聚合阅读">
           <Select defaultValue="Github" style={{ width: 160 }} onChange={this.handleChange}>
             <Select.Option value="Github">Github</Select.Option>
             <Select.Option value="Hacker News">Hacker News</Select.Option>
@@ -71,10 +94,10 @@ export default class NewsBoard extends PureComponent {
             <Select.Option value="开发者头条">开发者头条</Select.Option>
             <Select.Option value="伯乐头条">伯乐头条</Select.Option>
           </Select>
-          {githubNews.data ? (
+          {this.state.newsFetched.data ? (
             <ul>
             {
-              githubNews.data.map((post, i) => {
+              this.state.newsFetched.data.map((post, i) => {
                 return (
                   <div key={i}>
                       <a href={post.url} target="_blank">{post.title}</a>
