@@ -73,17 +73,37 @@ export default class NewsBoard extends PureComponent {
   render() {
 
     const { githubNews, toutiaoNews, hackerNews, segmentNews, jobboleNews } = this.props;
+    let load = true;
+    switch (this.state.newsType) {
+      case "Github":
+        load = githubNews.data ? false : true;
+        break;
+      case "Hacker News":
+        load = hackerNews.data ? false : true;
+        break;
+      case "Segment Fault":
+        load = segmentNews.data ? false : true;
+        break;
+      case "开发者头条":
+        load = toutiaoNews.data ? false : true;
+        break;
+      case "伯乐头条":
+        load = jobboleNews.data ? false : true;
+        break;
+      default:
+        break;
+    }
 
     return (
       <div>
-        <Card title="信息聚合阅读">
-          <Select defaultValue="Github" style={{ width: 160 }} onChange={this.handleChange}>
-            <Select.Option value="Github">Github</Select.Option>
-            <Select.Option value="Hacker News">Hacker News</Select.Option>
-            <Select.Option value="Segment Fault">Segment Fault</Select.Option>
-            <Select.Option value="开发者头条">开发者头条</Select.Option>
-            <Select.Option value="伯乐头条">伯乐头条</Select.Option>
-          </Select>
+        <Select defaultValue="Github" style={{ width: 160 }} onChange={this.handleChange}>
+          <Select.Option value="Github">Github</Select.Option>
+          <Select.Option value="Hacker News">Hacker News</Select.Option>
+          <Select.Option value="Segment Fault">Segment Fault</Select.Option>
+          <Select.Option value="开发者头条">开发者头条</Select.Option>
+          <Select.Option value="伯乐头条">伯乐头条</Select.Option>
+        </Select>
+        <Card title="信息聚合阅读" loading={load}>
           {this.state.newsType === 'Github' && githubNews.data ? (
             <ul>
             {
@@ -175,7 +195,7 @@ export default class NewsBoard extends PureComponent {
               }, this)
             }
             </ul>) : null}
-          
+
           {this.state.newsType === '伯乐头条' && jobboleNews.data ? (
             <ul>
             {
