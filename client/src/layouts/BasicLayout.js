@@ -110,7 +110,7 @@ class BasicLayout extends React.PureComponent {
       return [];
     }
     return menusData.map((item) => {
-      if (!item.name) {
+      if (!item.name || item.name == '帐户') {
         return null;
       }
       let itemPath;
@@ -160,7 +160,7 @@ class BasicLayout extends React.PureComponent {
     let title = "Eric's Lab";
     getRouteData('UserLayout').forEach((item) => {
       if (item.path === pathname) {
-        title = `${item.name} - Ant Design Pro`;
+        title = `${item.name} - Eric's Lab`;
       }
     });
     return title;
@@ -343,7 +343,7 @@ class BasicLayout extends React.PureComponent {
                   )
                 )
               }
-              <Redirect to="/spider/news-board" />
+              <Redirect to="/user/login" />
             </Switch>
             <GlobalFooter
               links={[{

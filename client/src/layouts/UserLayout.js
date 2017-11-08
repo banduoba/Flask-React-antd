@@ -32,11 +32,11 @@ class UserLayout extends React.PureComponent {
     const { location } = this.props;
     const { pathname } = location;
     let title = "Eric's Lab";
-    getRouteData('UserLayout').forEach((item) => {
-      if (item.path === pathname) {
-        title = `${item.name} - Ant Design Pro`;
-      }
-    });
+    // getRouteData('UserLayout').forEach((item) => {
+    //   if (item.path === pathname) {
+    //     title = `${item.name} - Eric's Lab`;
+    //   }
+    // });
     return title;
   }
   render() {
