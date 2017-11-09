@@ -1,4 +1,4 @@
-import { fakeRegister } from '../services/api';
+import { register } from '../services/auth';
 
 export default {
   namespace: 'register',
@@ -8,12 +8,12 @@ export default {
   },
 
   effects: {
-    *submit(_, { call, put }) {
+    *submit({payload}, { call, put }) {
       yield put({
         type: 'changeSubmitting',
         payload: true,
       });
-      const response = yield call(fakeRegister);
+      const response = yield call(register,payload);
       yield put({
         type: 'registerHandle',
         payload: response,

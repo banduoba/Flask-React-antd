@@ -1,2 +1,4 @@
 *.pyc
 venv/
+.idea/
+server/data-dev.sqlite

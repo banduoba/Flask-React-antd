@@ -29,6 +29,11 @@
       "target": "http://localhost:5000",
       "changeOrigin": true,
       "pathRewrite": { "^/spider" : "/api/v1.0/" }
+    },
+    "/auth": {
+      "target": "http://localhost:5000",
+      "changeOrigin": true,
+      "pathRewrite": { "^/auth" : "/auth/" }
     }
   },
   "ignoreMomentLocale": true,

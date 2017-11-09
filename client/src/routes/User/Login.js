@@ -79,7 +79,7 @@ export default class Login extends Component {
       <div className={styles.main}>
         <Form onSubmit={this.handleSubmit}>
           <Tabs animated={false} className={styles.tabs} activeKey={type} onChange={this.onSwitch}>
-            <TabPane tab="账户密码登录" key="account">
+            <TabPane tab="" key="account">
               {
                 login.status === 'error' &&
                 login.type === 'account' &&
@@ -87,16 +87,17 @@ export default class Login extends Component {
                 this.renderMessage('账户或密码错误')
               }
               <FormItem>
-                {getFieldDecorator('userName', {
-                  rules: [{
-                    required: type === 'account', message: '请输入账户名！',
+                {getFieldDecorator('mail', {
+                    rules: [{
+                    required: true, message: '请输入邮箱地址！',
+                  }, {
+                    type: 'email', message: '邮箱地址格式错误！',
                   }],
                 })(
-                  <Input
+                  <Input 
                     size="large"
-                    prefix={<Icon type="user" className={styles.prefixIcon} />}
-                    placeholder="admin"
-                  />
+                    prefix={<Icon type="mail" className={styles.prefixIcon} />}
+                    placeholder="邮箱" />
                 )}
               </FormItem>
               <FormItem>
@@ -109,59 +110,9 @@ export default class Login extends Component {
                     size="large"
                     prefix={<Icon type="lock" className={styles.prefixIcon} />}
                     type="password"
-                    placeholder="888888"
+                    placeholder="密码"
                   />
                 )}
-              </FormItem>
-            </TabPane>
-            <TabPane tab="手机号登录" key="mobile">
-              {
-                login.status === 'error' &&
-                login.type === 'mobile' &&
-                login.submitting === false &&
-                this.renderMessage('验证码错误')
-              }
-              <FormItem>
-                {getFieldDecorator('mobile', {
-                  rules: [{
-                    required: type === 'mobile', message: '请输入手机号！',
-                  }, {
-                    pattern: /^1\d{10}$/, message: '手机号格式错误！',
-                  }],
-                })(
-                  <Input
-                    size="large"
-                    prefix={<Icon type="mobile" className={styles.prefixIcon} />}
-                    placeholder="手机号"
-                  />
-                )}
-              </FormItem>
-              <FormItem>
-                <Row gutter={8}>
-                  <Col span={16}>
-                    {getFieldDecorator('captcha', {
-                      rules: [{
-                        required: type === 'mobile', message: '请输入验证码！',
-                      }],
-                    })(
-                      <Input
-                        size="large"
-                        prefix={<Icon type="mail" className={styles.prefixIcon} />}
-                        placeholder="验证码"
-                      />
-                    )}
-                  </Col>
-                  <Col span={8}>
-                    <Button
-                      disabled={count}
-                      className={styles.getCaptcha}
-                      size="large"
-                      onClick={this.onGetCaptcha}
-                    >
-                      {count ? `${count} s` : '获取验证码'}
-                    </Button>
-                  </Col>
-                </Row>
               </FormItem>
             </TabPane>
           </Tabs>
@@ -179,11 +130,6 @@ export default class Login extends Component {
           </FormItem>
         </Form>
         <div className={styles.other}>
-          其他登录方式
-          {/* 需要加到 Icon 中 */}
-          <span className={styles.iconAlipay} />
-          <span className={styles.iconTaobao} />
-          <span className={styles.iconWeibo} />
           <Link className={styles.register} to="/user/register">注册账户</Link>
         </div>
       </div>
