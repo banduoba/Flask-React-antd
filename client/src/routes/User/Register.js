@@ -35,10 +35,10 @@ export default class Register extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ failResult: '' });
-    if (nextProps.register.status === 'ok') {
+    if (nextProps.register.status === 'success') {
       this.props.dispatch(routerRedux.push('/user/register-result'));
-    } else if (nextProps.register.status === 'false') {
-      this.setState({ failResult: '注册失败！' });
+    } else if (nextProps.register.status === 'failure') {
+      this.setState({ failResult: '注册失败！'+ nextProps.register.info});
     }
   }
 
@@ -151,15 +151,6 @@ export default class Register extends Component {
         <h3>注册</h3>
         <p style={{ color: 'red', }}>{failResult}</p>
         <Form onSubmit={this.handleSubmit}>
-          <FormItem>
-            {getFieldDecorator('userName', {
-              rules: [{
-                required: true, message: '请输入用户名！',
-              }],
-            })(
-              <Input size="large" placeholder="用户名" />
-            )}
-          </FormItem>
           <FormItem>
             {getFieldDecorator('mail', {
               rules: [{

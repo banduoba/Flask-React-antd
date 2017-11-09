@@ -33,7 +33,7 @@
     "/auth": {
       "target": "http://localhost:5000",
       "changeOrigin": true,
-      "pathRewrite": { "^/auth" : "/auth/" }
+      "pathRewrite": { "^/auth" : "/auth" }
     }
   },
   "ignoreMomentLocale": true,

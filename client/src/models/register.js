@@ -5,6 +5,7 @@ export default {
 
   state: {
     status: undefined,
+    info: undefined,
   },
 
   effects: {
@@ -30,6 +31,7 @@ export default {
       return {
         ...state,
         status: payload.status,
+        info: payload.info
       };
     },
     changeSubmitting(state, { payload }) {
