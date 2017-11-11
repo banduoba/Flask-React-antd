@@ -7,7 +7,7 @@
     "precommit": "npm run lint-staged",
     "start": "roadhog server",
     "start:no-proxy": "NO_PROXY=true roadhog server",
-    "build": "roadhog build && node flaskproc.js",
+    "build": "roadhog build",
     "site": "roadhog-api-doc static",
     "analyze": "roadhog build --analyze",
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",
