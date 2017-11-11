@@ -5,7 +5,7 @@ export default {
 
   state: {
     status: undefined,
-    info: undefined,
+    info: undefined
   },
 
   effects: {
@@ -24,6 +24,11 @@ export default {
         payload: false,
       });
     },
+    *clear(_, { put }) {
+      yield put({
+        type: 'clearState'
+      })
+    }
   },
 
   reducers: {
@@ -40,5 +45,12 @@ export default {
         submitting: payload,
       };
     },
+    clearState(state) {
+      return {
+        ...state,
+        status: undefined,
+        info: undefined
+      }
+    }
   },
 };

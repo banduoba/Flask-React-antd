@@ -37,8 +37,10 @@ export default class Register extends Component {
     this.setState({ failResult: '' });
     if (nextProps.register.status === 'success') {
       this.props.dispatch(routerRedux.push('/user/register-result'));
+      this.props.dispatch( {type: 'register/clear'} );
     } else if (nextProps.register.status === 'failure') {
       this.setState({ failResult: '注册失败！'+ nextProps.register.info});
+      this.props.dispatch( {type: 'register/clear'} );
     }
   }
 
