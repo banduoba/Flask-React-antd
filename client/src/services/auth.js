@@ -17,3 +17,7 @@ export async function accountLogin(params) {
 export async function logout() {
   return request('/auth/logout');
 }
+
+export async function queryCurrent() {
+  return request('/auth/currentUser');
+}

@@ -51,3 +51,21 @@ def register():
     db.session.add(user)
     result['status'] = 'success'
     return jsonify(result)
+
+@auth.route('/currentUser', methods=['GET'])
+@login_required
+def fetchCurrentUser():
+    result = {}
+    try:
+        result['email'] = current_user.email
+        result['username'] = current_user.username
+        result['name'] = current_user.name
+        result['location'] = current_user.location
+        result['about_me'] = current_user.about_me
+        result['memeber_since'] = current_user.member_since
+        result['last_seen'] = current_user.last_seen
+        result['status'] = 'success'
+    except:
+        result['status'] = 'failure'
+    return jsonify(result);
+
