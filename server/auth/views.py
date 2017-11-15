@@ -1,9 +1,14 @@
 #coding=utf-8
 from flask import jsonify, request
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
 from ..models.user import User
+
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.ping()
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
