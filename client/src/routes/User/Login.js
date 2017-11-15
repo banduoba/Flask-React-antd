@@ -18,8 +18,8 @@ export default class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.login.status === 'ok') {
-      this.props.dispatch(routerRedux.push('/'));
+    if (nextProps.login.status === 'success') {
+      this.props.dispatch(routerRedux.push('/spider/news-board'));
     }
   }
 

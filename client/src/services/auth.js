@@ -6,3 +6,10 @@ export async function register(params) {
     body: params,
   });
 }
+
+export async function accountLogin(params) {
+  return request('/auth/login', {
+    method: 'POST',
+    body: params,
+  });
+}

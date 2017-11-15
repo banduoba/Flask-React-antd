@@ -1,10 +1,12 @@
 import { fakeAccountLogin, fakeMobileLogin } from '../services/api';
+import { accountLogin } from '../services/auth';
 
 export default {
   namespace: 'login',
 
   state: {
     status: undefined,
+    info: undefined
   },
 
   effects: {
@@ -13,9 +15,9 @@ export default {
         type: 'changeSubmitting',
         payload: true,
       });
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(accountLogin, payload);
       yield put({
-        type: 'loginHandle',
+        type: 'accountLoginHandle',
         payload: response,
       });
       yield put({
@@ -50,6 +52,14 @@ export default {
   },
 
   reducers: {
+    accountLoginHandle(state, { payload }) {
+      return {
+        ...state,
+        status: payload.status,
+        info: password.info,
+        type: 'account',
+      };
+    },
     loginHandle(state, { payload }) {
       return {
         ...state,
