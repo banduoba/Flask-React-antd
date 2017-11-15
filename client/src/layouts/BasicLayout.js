@@ -289,7 +289,8 @@ class BasicLayout extends React.PureComponent {
                   console.log('enter', value); // eslint-disable-line
                 }}
               />
-              <NoticeIcon
+              { true ? (null) :
+              (<NoticeIcon
                 className={styles.action}
                 count={currentUser.notifyCount}
                 onItemClick={(item, tabProps) => {
@@ -318,7 +319,8 @@ class BasicLayout extends React.PureComponent {
                   emptyText="你已完成所有待办"
                   emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
                 />
-              </NoticeIcon>
+              </NoticeIcon>)
+              }
               {currentUser.name ? (
                 <Dropdown overlay={menu}>
                   <span className={`${styles.action} ${styles.account}`}>

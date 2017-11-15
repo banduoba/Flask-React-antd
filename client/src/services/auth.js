@@ -13,3 +13,7 @@ export async function accountLogin(params) {
     body: params,
   });
 }
+
+export async function logout() {
+  return request('/auth/logout');
+}

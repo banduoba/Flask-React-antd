@@ -1,5 +1,5 @@
 import { fakeAccountLogin, fakeMobileLogin } from '../services/api';
-import { accountLogin } from '../services/auth';
+import { accountLogin, logout } from '../services/auth';
 
 export default {
   namespace: 'login',
@@ -40,10 +40,11 @@ export default {
         payload: false,
       });
     },
-    *logout({ payload, callback }, { put }) {
+    *logout({ payload, callback }, { call, put }) {
+      const response = yield call(logout);
       yield put({
         type: 'logoutHandle',
-        payload,
+        payload: response
       });
       if (callback) {
         callback();
