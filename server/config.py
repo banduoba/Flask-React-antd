@@ -12,6 +12,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASKY_MAIL_SUBJECT_PREFIX = '[Eric Lab]'
     FLASKY_MAIL_SENDER = os.environ.get('FLASKY_ADMIN')
+    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 
     @staticmethod
     def init_app(app):
@@ -20,7 +21,7 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+        'mysql://root@127.0.0.1/data-dev'
 
 class TestingConfig(Config):
     TESTING = True

@@ -87,6 +87,8 @@ class BasicLayout extends React.PureComponent {
           this.props.dispatch(routerRedux.push('/user/login'));
         },
       });
+    } else if (key === 'userinfo') {
+
     }
   }
   getDefaultCollapsedSubMenus(props) {
@@ -229,7 +231,7 @@ class BasicLayout extends React.PureComponent {
 
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
-        <Menu.Item key="user"><Icon type="user" />个人中心</Menu.Item>
+        <Menu.Item key="userinfo"><Icon type="user" />个人中心</Menu.Item>
         <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>
@@ -324,7 +326,7 @@ class BasicLayout extends React.PureComponent {
               {currentUser.username ? (
                 <Dropdown overlay={menu}>
                   <span className={`${styles.action} ${styles.account}`}>
-                    <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
+                    <Avatar size="small" className={styles.avatar} icon="user" />
                     {currentUser.username}
                   </span>
                 </Dropdown>

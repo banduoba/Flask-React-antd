@@ -64,6 +64,7 @@ def fetchCurrentUser():
         result['about_me'] = current_user.about_me
         result['memeber_since'] = current_user.member_since
         result['last_seen'] = current_user.last_seen
+        result['avatar'] = current_user.avatar_hash
         result['status'] = 'success'
     except:
         result['status'] = 'failure'
