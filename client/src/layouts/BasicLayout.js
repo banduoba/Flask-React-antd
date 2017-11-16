@@ -347,7 +347,8 @@ class BasicLayout extends React.PureComponent {
                   )
                 )
               }
-              <Redirect to="/user/login" />
+              {currentUser.username ? (<Redirect to="/blog/articles" />
+                ) : (<Redirect to="/user/login" />)}
             </Switch>
             <GlobalFooter
               links={[{
