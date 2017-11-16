@@ -7,6 +7,7 @@ import Monitor from '../routes/Dashboard/Monitor';
 import Workplace from '../routes/Dashboard/Workplace';
 
 import NewsBoard from '../routes/Spider/NewsBoard';
+import Articles from '../routes/Blog/Articles';
 
 import TableList from '../routes/List/TableList';
 import CoverCardList from '../routes/List/CoverCardList';
@@ -58,6 +59,15 @@ const data = [{
   //     component: Workplace,
   //   }],
   // }, {
+    name: '博客',
+    icon: 'book',
+    path: 'blog',
+    children: [{
+      name: '文章',
+      path: 'articles',
+      component: Articles
+    }],
+    }, {
     name: '爬虫',
     icon: 'scan',
     path: 'spider',
