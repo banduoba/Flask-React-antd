@@ -124,6 +124,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
@@ -132,6 +133,7 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
 login_manager.anonymous_user = AnonymousUser
+
 
 @login_manager.user_loader
 def load_user(user_id):

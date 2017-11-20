@@ -63,6 +63,20 @@ export default class Articles extends PureComponent {
   componentWillUnmount() {
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields({ force: true },
+      (err, values) => {
+        if (!err) {
+          this.props.dispatch({
+            type: 'blog/articleSubmit',
+            payload: values,
+          });
+        }
+      }
+    );
+  }
+
   render() {
 
     const { currentUser, submitting } = this.props;
@@ -99,7 +113,7 @@ export default class Articles extends PureComponent {
               {...formItemLayout}
               label="在想些什么呢:"
             >
-              {getFieldDecorator('goal', {
+              {getFieldDecorator('body', {
                 rules: [{
                   required: true, message: '请输入想法',
                 }],
