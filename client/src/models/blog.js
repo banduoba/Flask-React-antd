@@ -4,7 +4,6 @@ export default {
   namespace: 'blog',
 
   state: {
-    loading: false,
     status: undefined,
     info: undefined,
     articles: {},

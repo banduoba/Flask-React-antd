@@ -42,7 +42,7 @@ for (let i = 1; i <= 10; i++) {
 
 @connect(state => ({
   currentUser: state.user.currentUser,
-  submitting: state.form.regularFormSubmitting,
+  blog: state.blog,
 }))
 @Form.create()
 export default class Articles extends PureComponent {
@@ -50,7 +50,7 @@ export default class Articles extends PureComponent {
     super(props);
 
     this.state = {
-      newsType: 'Github'
+      failResult: '',
     }
   }
 
@@ -58,6 +58,14 @@ export default class Articles extends PureComponent {
     // this.props.dispatch({
     //   type: 'spider/fetchGithubNews',
     // });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.blog.status === 'error') {
+      this.setState({ failResult: '提交失败！'+ nextProps.blog.info});
+    } else {
+      this.setState({ failResult: '' });
+    }
   }
 
   componentWillUnmount() {
@@ -79,8 +87,9 @@ export default class Articles extends PureComponent {
 
   render() {
 
-    const { currentUser, submitting } = this.props;
+    const { currentUser, blog } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const { failResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -104,6 +113,7 @@ export default class Articles extends PureComponent {
     return (
       <PageHeaderLayout title="文章列表">
         <Card bordered={false}>
+          <p style={{ color: 'red', }}>{failResult}</p>
           <Form
             onSubmit={this.handleSubmit}
             hideRequiredMark
@@ -122,7 +132,7 @@ export default class Articles extends PureComponent {
               )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
+              <Button type="primary" htmlType="submit" loading={blog.submitting}>
                 提交
               </Button>
             </FormItem>
