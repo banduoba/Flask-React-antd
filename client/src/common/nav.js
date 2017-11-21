@@ -8,6 +8,7 @@ import Workplace from '../routes/Dashboard/Workplace';
 
 import NewsBoard from '../routes/Spider/NewsBoard';
 import Articles from '../routes/Blog/Articles';
+import Game2048 from '../routes/Game/Game2048';
 
 import TableList from '../routes/List/TableList';
 import CoverCardList from '../routes/List/CoverCardList';
@@ -76,6 +77,15 @@ const data = [{
       path: 'news-board',
       component: NewsBoard,
     }],
+    }, {
+    name: '游戏',
+    icon: 'rocket',
+    path: 'game',
+    children: [{
+      name: '2048',
+      path: 'game-2048',
+      component: Game2048,
+    }]
   // }, {
   //   name: '表单页',
   //   path: 'form',
