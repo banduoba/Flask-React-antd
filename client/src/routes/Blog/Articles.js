@@ -46,6 +46,9 @@ export default class Articles extends PureComponent {
   componentWillReceiveProps(nextProps) {
     if (nextProps.blog.status === 'error') {
       this.setState({ failResult: '提交失败！'+ nextProps.blog.info});
+    } else if (nextProps.blog.status === 'success') {
+      this.props.dispatch( {type: 'blog/clear'} );
+      this.props.dispatch({type: 'blog/fetchArticles'});
     } else {
       this.setState({ failResult: '' });
     }

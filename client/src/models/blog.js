@@ -31,6 +31,11 @@ export default {
         type: 'saveArticles',
         payload: response,
       });
+    },
+    *clear(_, { put }) {
+      yield put({
+        type: 'clearState'
+      })
     }
   },
 
@@ -58,6 +63,14 @@ export default {
         ...state,
         articles: action.payload.content,
       };
+    },
+    clearState(state) {
+      return {
+        ...state,
+        status: undefined,
+        info: undefined,
+        articles: []
+      }
     }
   },
 };
