@@ -8,25 +8,18 @@ import styles from './Articles.less';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'username',
   width: 150,
   render: () => <Avatar shape="square" size="large" icon="user" />,
 }, {
-  title: 'Age',
-  dataIndex: 'age',
-  key: 'age',
-  render: () => (
+  render: (record) => (
     <div>
-      <p>ann86</p>
-      <p>some description</p>
+      <p>{record.username}</p>
+      <p>{record.body}</p>
     </div>
   )
 }, {
-  title: 'Address',
-  dataIndex: 'address',
-  key: 'address',
+  dataIndex: 'date',
   width: 360
 }];
 const data = [];
@@ -55,9 +48,9 @@ export default class Articles extends PureComponent {
   }
 
   componentDidMount() {
-    // this.props.dispatch({
-    //   type: 'spider/fetchGithubNews',
-    // });
+    this.props.dispatch({
+      type: 'blog/fetchArticles',
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -138,7 +131,7 @@ export default class Articles extends PureComponent {
             </FormItem>
           </Form>
           <Divider style={{ margin: '40px 0 24px' }} />
-          <Table showHeader={false} columns={columns} dataSource={data} />
+          <Table showHeader={false} columns={columns} dataSource={blog.articles} />
         </Card>
       </PageHeaderLayout>
     );

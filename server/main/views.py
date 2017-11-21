@@ -28,3 +28,24 @@ def submit_article():
     return jsonify(result)
 
 
+@main.route('/articles', methods=['GET'])
+@login_required
+def get_articles():
+    result = {}
+    try:
+        posts = Post.query.order_by(Post.timestamp.desc()).all()
+        post_vec = []
+        for post in posts:
+            post_item = {}
+            post_item['username'] = post.author.username
+            post_item['body'] = post.body
+            post_item['date'] = post.timestamp
+            post_vec.append(post_item)
+        result['status'] = 'success'
+        result['content'] = post_vec
+    except:
+        result['status'] = 'error'
+        result['info'] = '获取文章失败'
+    return jsonify(result)
+
+

@@ -6,7 +6,7 @@ export default {
   state: {
     status: undefined,
     info: undefined,
-    articles: {},
+    articles: [],
   },
 
   effects: {
@@ -49,9 +49,14 @@ export default {
       };
     },
     saveArticles(state, action) {
+      let content = action.payload.content;
+      for(let count in content) {
+        let key = count + 1;
+        content[count].key = key;
+      }
       return {
         ...state,
-        articles: action.payload,
+        articles: action.payload.content,
       };
     }
   },
